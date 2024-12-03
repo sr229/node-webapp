@@ -1,20 +1,35 @@
 pipeline {
     agent { label 'linux-agent' }
     stages {
-        stage('checkout') {
+        stage('Checkout') {
             steps {
-                checkout scm
+             checkout scm
             }
-        }
-        stage('build_dockerfile') {
-            steps {
-                docker.build('acad/node-app', './Dockerfile')
+
+            agent {
+                label 'linux-agent'
             }
         }
 
-        stage('deploy_and_run') {
+        stage('Docker Build') {
             steps {
-                docker.image('acad/node-app:latest').withRun('-p 3000:3000')
+                docker.build('acad-node-app')
+            }
+
+            agent {
+                label 'linux-agent'
+            }
+        }
+
+        stage('Deploy and Run') {
+            steps {
+                docker.image('acad-node-app').withRun('-p 3000:3000') {
+                    sh 'npm start'
+                }
+             }
+
+            agent {
+                label 'linux-agent'
             }
         }
     }
