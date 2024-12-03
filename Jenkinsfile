@@ -4,8 +4,8 @@ pipeline {
         stage('build_dockerfile') {
             steps {
                 checkout scm
-                def customImage = docker.build("acad/node-app:${env.BUILD_ID}")
-                customImage.push('latest')
+                def app = docker.build('acad/node-app', './Dockerfile')
+                app.push()
             }
         }
 
