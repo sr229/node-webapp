@@ -1,15 +1,15 @@
 pipeline {
     agent { label 'linux-agent' }
     stages {
-        stage('Checkout') {
-            steps {
-                checkout
-            }
+//        stage('Checkout') {
+//            steps {
+//                checkout scm
+//            }
 
-            agent {
-                label 'linux-agent'
-            }
-        }
+//            agent {
+//                label 'linux-agent'
+//            }
+//        }
 
         stage('Docker Build') {
             steps {
