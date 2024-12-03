@@ -1,11 +1,15 @@
 pipeline {
     agent { label 'linux-agent' }
+    def app
     stages {
-        stage('build_dockerfile') {
+        stage('checkout') {
             steps {
                 checkout scm
-                def app = docker.build('acad/node-app', './Dockerfile')
-                app.push()
+            }
+        }
+        stage('build_dockerfile') {
+            steps {
+                app = docker.build('acad/node-app', './Dockerfile')
             }
         }
 
