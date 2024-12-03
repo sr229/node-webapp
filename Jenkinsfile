@@ -25,11 +25,7 @@ pipeline {
 
         stage('Deploy and Run') {
             steps {
-                script {
-                    docker.image('acad-node-app').withRun('-p 3000:3000') {
-                        sh 'npm start'
-                    }
-                }
+                sh 'docker run -d --name opswerks-node-app  -p 3000:300 acad-node-app:latest'
              }
 
             agent {
