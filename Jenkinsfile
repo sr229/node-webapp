@@ -17,6 +17,7 @@ pipeline {
 
         stage('Deploy and Run') {
             steps {
+                sh 'docker stop opswerks-node-app && docker rm opswerks-node-app'
                 sh 'docker run -d --name opswerks-node-app  -p 3000:300 acad-node-app:latest'
             }
         }
