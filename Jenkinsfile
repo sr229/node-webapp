@@ -3,7 +3,7 @@ pipeline {
     stages {
         stage('Checkout') {
             steps {
-             checkout scm
+                checkout scm
             }
 
             agent {
@@ -13,7 +13,9 @@ pipeline {
 
         stage('Docker Build') {
             steps {
-                docker.build('acad-node-app')
+                script {
+                    docker.build('acad-node-app')
+                }
             }
 
             agent {
@@ -23,8 +25,10 @@ pipeline {
 
         stage('Deploy and Run') {
             steps {
-                docker.image('acad-node-app').withRun('-p 3000:3000') {
-                    sh 'npm start'
+                script {
+                    docker.image('acad-node-app').withRun('-p 3000:3000') {
+                        sh 'npm start'
+                    }
                 }
              }
 
